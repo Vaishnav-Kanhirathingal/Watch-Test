@@ -29,16 +29,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setReceiver() {
-//        Wearable.getDataClient(this).addListener{
-//            it.
-//
-//        }
-
-
         Wearable.getMessageClient(this).addListener { messageEvent ->
             when (messageEvent.path) {
                 TEST_PATH -> {
-                    Log.d(TAG, "Path = ${messageEvent.data}, data = ${String(messageEvent.data)}")
+                    Log.d(TAG, "Path = ${messageEvent.path}, data = ${String(messageEvent.data)}")
                     binding.centerTextView.text = "message = [${String(messageEvent.data)}]"
                 }
 
