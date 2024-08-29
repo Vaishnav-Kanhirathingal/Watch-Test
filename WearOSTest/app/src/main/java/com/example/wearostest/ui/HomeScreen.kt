@@ -86,7 +86,6 @@ fun DefaultPreview() {
     HomeScreen.WearApp(
         message = "",
         counterService = CounterService(
-            context = LocalContext.current,
             setMessage = {}
         )
     )

@@ -9,7 +9,6 @@ private const val TEST_PATH = "/test/request"
 private const val NODE_ID = "node_id"
 
 class CounterService(
-    private val context: Context,
     private val setMessage: (txt: String) -> Unit
 ) {
     private val TAG = this::class.simpleName
@@ -25,8 +24,9 @@ class CounterService(
             .addOnFailureListener { Log.d(TAG, "sendMessage failure");it.printStackTrace() }
     }
 
-    fun startListener() {
+    fun startListener(context: Context) {
         Wearable.getMessageClient(context).addListener { messageEvent ->
+            Log.d(TAG, "event received = ${String(messageEvent.data)}")
             when (messageEvent.path) {
                 TEST_PATH -> setMessage(String(messageEvent.data))
                 else -> {

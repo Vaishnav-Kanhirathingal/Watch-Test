@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         counterService = CounterService(
-            context = this,
             setMessage = { message.value = it }
         )
         setContentView(binding.root)
@@ -29,12 +28,12 @@ class MainActivity : AppCompatActivity() {
     private fun applyBinding() {
         // TODO: Not yet implemented
         try {
-            counterService.startListener()
+            counterService.startListener(context = this)
         } catch (e: Exception) {
             e.printStackTrace()
         }
         message.observe(this) {
-            binding.counterTextView.text = it?:"[MESSAGE]"
+            binding.counterTextView.text = it ?: "[MESSAGE]"
         }
         binding.testButton.setOnClickListener {
             counterService.sendTrigger(context = this)
