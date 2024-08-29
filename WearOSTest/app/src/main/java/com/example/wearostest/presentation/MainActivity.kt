@@ -90,6 +90,29 @@ fun DefaultPreview() {
     WearApp()
 }
 
+private const val TAG = "MainActivity"
+
+private const val TEST_PATH = "/test/request"
+private const val NODE_ID = "node_id"
+
+fun test(context: Context) {
+    Wearable.getMessageClient(context)
+        .sendMessage(NODE_ID, TEST_PATH, "some message".toByteArray())
+        .addOnSuccessListener { Log.d(TAG, "sendMessage success") }
+        .addOnFailureListener { Log.d(TAG, "sendMessage failure");it.printStackTrace() }
+
+
+    Wearable.getDataClient(context)
+        .putDataItem(
+            PutDataRequest.create(TEST_PATH)
+                .setData(
+                    "\"~Some jumbled words~\" - Wear OS".toByteArray()
+                )
+        )
+        .addOnSuccessListener { Log.d(TAG, "putDataItem success") }
+        .addOnFailureListener { Log.d(TAG, "putDataItem failure");it.printStackTrace() }
+}
+
 //private const val VOICE_TRANSCRIPTION_CAPABILITY_NAME = "voice_transcription"
 //
 //private fun setupVoiceTranscription(context: Context) {
@@ -117,21 +140,3 @@ fun DefaultPreview() {
 //    // Find a nearby node or pick one arbitrarily.
 //    return nodes.firstOrNull { it.isNearby }?.id ?: nodes.firstOrNull()?.id
 //}
-
-private const val TEST_PATH = "/test/request"
-private const val TAG = "MainActivity"
-
-fun test(context: Context) {
-//    Wearable.getMessageClient(context)
-//        .sendMessage(TEST_PATH, TAG, "some message".toByteArray())
-
-    Wearable.getDataClient(context)
-        .putDataItem(
-            PutDataRequest.create(TEST_PATH)
-                .setData(
-                    "\"~Some jumbled words~\" - Wear OS".toByteArray()
-                )
-        )
-        .addOnSuccessListener { Log.d(TAG, "success") }
-        .addOnFailureListener { Log.d(TAG, "failure");it.printStackTrace() }
-}
