@@ -7,6 +7,7 @@ android {
     namespace = "com.example.wearostest"
     compileSdk = 34
 
+    buildFeatures { viewBinding = true }
     defaultConfig {
         applicationId = "com.example.wearostest"
         minSdk = 26
