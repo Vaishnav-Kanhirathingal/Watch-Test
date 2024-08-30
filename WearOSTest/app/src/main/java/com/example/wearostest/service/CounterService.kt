@@ -36,4 +36,27 @@ class CounterService(
         }
         Log.d(TAG, "receiver set")
     }
+
+//    private fun setupVoiceTranscription(context: Context) {
+//        val capabilityInfo: CapabilityInfo = Tasks.await(
+//            Wearable
+//                .getCapabilityClient(context)
+//                .getCapability(MESSAGE_CAPABILITY_NAME, CapabilityClient.FILTER_REACHABLE)
+//        )
+//        val transcriptionNodeId = capabilityInfo.nodes.let { nodes ->
+//            nodes.firstOrNull { it.isNearby }?.id ?: nodes.firstOrNull()?.id
+//        }
+//
+//        Wearable.getMessageClient(context)
+//            .sendMessage(
+//                transcriptionNodeId,
+//                TEST_PATH,
+//                "From new service func".toByteArray()
+//            )
+//            .addOnSuccessListener { Log.d(TAG, "addOnSuccessListener for new service function") }
+//            .addOnFailureListener { e ->
+//                Log.d(TAG, "addOnFailureListener for new service function")
+//                e.printStackTrace()
+//            }
+//    }
 }
