@@ -29,7 +29,8 @@ import com.example.wearostest.service.CounterService
 object HomeScreen {
     @Composable
     fun WearApp(
-        message: String?,
+        messageClientMessage: String?,
+        dataClientMessage: String?,
         counterService: CounterService
     ) {
         Box(
@@ -48,22 +49,23 @@ object HomeScreen {
                 ),
                 content = {
                     val context = LocalContext.current
+                    val textModifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp)
                     Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 4.dp),
+                        modifier = textModifier,
                         textAlign = TextAlign.Center,
-                        text = message ?: "[MESSAGE]"
+                        text = "message client - ${messageClientMessage ?: "[MESSAGE]"}"
+                    )
+                    Text(
+                        modifier = textModifier,
+                        textAlign = TextAlign.Center,
+                        text = "data client - ${dataClientMessage ?: "[MESSAGE]"}"
                     )
                     Button(
                         onClick = {
-                            counterService.sendTrigger(
-                                context = context,
-                            )
-//                            counterService.sendTrigger(
-//                                context = context,
-//                                message = System.currentTimeMillis().toString()
-//                            )
+                            counterService.sendTrigger(context = context)
+                            counterService.sendViaDataClient(context = context)
                         },
                         content = {
                             Box(
@@ -84,9 +86,11 @@ object HomeScreen {
 @Composable
 fun DefaultPreview() {
     HomeScreen.WearApp(
-        message = "",
+        messageClientMessage = null,
+        dataClientMessage = null,
         counterService = CounterService(
-            setMessage = {}
+            messageClientSetMessage = {},
+            dataClientSetMessage = {}
         )
     )
 }

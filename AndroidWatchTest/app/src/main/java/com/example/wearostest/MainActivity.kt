@@ -9,38 +9,39 @@ import com.example.wearostest.service.CounterService
 private const val TEST_PATH = "/test/request"
 
 class MainActivity : AppCompatActivity() {
-    private var counter = 0
     private val TAG = this::class.simpleName
     private lateinit var binding: ActivityMainBinding
     private lateinit var counterService: CounterService
-    private val message: MutableLiveData<String> = MutableLiveData(null)
+    private val messageMessage: MutableLiveData<String> = MutableLiveData(null)
+    private val dataMessage: MutableLiveData<String> = MutableLiveData(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         counterService = CounterService(
-            setMessage = { message.value = it }
+            messageClientSetMessage = { messageMessage.value = it },
+            dataClientSetMessage = { dataMessage.value = it }
         )
         setContentView(binding.root)
         applyBinding()
     }
 
     private fun applyBinding() {
-        // TODO: Not yet implemented
         try {
             counterService.startListener(context = this)
+            counterService.startDataClientListener(context = this)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        message.observe(this) {
-            binding.counterTextView.text = it ?: "[MESSAGE]"
+        messageMessage.observe(this) {
+            binding.messageClientTextView.text = "Message client - ${it ?: "[MESSAGE]"}"
+        }
+        dataMessage.observe(this) {
+            binding.dataClientTextView.text = "Data client - ${it ?: "[MESSAGE]"}"
         }
         binding.testButton.setOnClickListener {
             counterService.sendTrigger(context = this)
-//            counterService.sendTrigger(
-//                context = this,
-//                message = System.currentTimeMillis().toString()
-//            )
+            counterService.sendViaDataClient(context = this)
         }
     }
 }

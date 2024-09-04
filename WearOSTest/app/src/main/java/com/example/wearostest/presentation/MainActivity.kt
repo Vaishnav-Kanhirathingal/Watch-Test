@@ -13,24 +13,29 @@ import com.example.wearostest.ui.HomeScreen
 
 class MainActivity : ComponentActivity() {
     private lateinit var counterService: CounterService
-    private lateinit var message: MutableState<String?>
+    private lateinit var messageClientMessage: MutableState<String?>
+    private lateinit var dataClientMessage: MutableState<String?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         setTheme(android.R.style.Theme_DeviceDefault)
         counterService = CounterService(
-            setMessage = { message.value = it }
+            messageClientSetMessage = { messageClientMessage.value = it },
+            dataClientSetMessage = { dataClientMessage.value=it }
         )
         setContent {
-            message = remember { mutableStateOf(null) }
+            messageClientMessage = remember { mutableStateOf(null) }
+            dataClientMessage = remember { mutableStateOf(null) }
             WearOSTestTheme {
                 HomeScreen.WearApp(
-                    message = message.value,
+                    messageClientMessage = messageClientMessage.value,
+                    dataClientMessage = dataClientMessage.value,
                     counterService = counterService
                 )
             }
         }
         counterService.startListener(context = this)
+        counterService.startDataClientListener(context = this)
     }
 }
