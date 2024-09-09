@@ -56,8 +56,8 @@ class CounterService(
                     .apply { this.dataMap.putString(KEY, Random.nextInt().toString()) }
                     .asPutDataRequest()
             )
-            .addOnSuccessListener { Log.d(TAG, "addOnSuccessListener called") }
-            .addOnFailureListener { Log.d(TAG, "addOnFailureListener called") }
+            .addOnSuccessListener { Log.d(TAG, "DataClient addOnSuccessListener called") }
+            .addOnFailureListener { Log.d(TAG, "DataClient addOnFailureListener called") }
     }
 
     fun startDataClientListener(context: Context) {

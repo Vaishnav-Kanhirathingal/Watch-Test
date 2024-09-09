@@ -9,7 +9,6 @@ import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import kotlin.random.Random
 
-private const val MESSAGE_CAPABILITY_NAME = "message_transfer"
 private const val TEST_PATH = "/test/request"
 private const val NODE_ID = "node_id"
 
